@@ -118,9 +118,11 @@ The proxy starts at `http://127.0.0.1:4000`.
 
 | Model name | Provider | Underlying model |
 |------------|----------|-----------------|
-| `deepseek-official` | DeepSeek | deepseek-chat |
-| `deepseek-deepinfra` | DeepInfra | deepseek-ai/DeepSeek-V4-Pro |
-| `gemini-flash` | Google AI Studio | gemini-2.0-flash |
+| `deepseek-official-chat` | DeepSeek | deepseek-chat |
+| `deepseek-official-v4-flash` | DeepSeek | deepseek-v4-flash |
+| `deepseek-deepinfra-v4-pro` | DeepInfra | deepseek-ai/DeepSeek-V4-Pro |
+| `deepseek-deepinfra-v4-flash` | DeepInfra | deepseek-ai/DeepSeek-V4-0-Flash |
+| `gemini-flash` | Google AI Studio | gemini-3.1-flash-lite |
 | `gemini-pro` | Google AI Studio | gemini-2.5-pro |
 
 ---
