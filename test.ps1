@@ -44,8 +44,16 @@ Write-Host ""
 
 $prompt = "Reply with exactly one sentence: what model are you?"
 $results = @()
+$lastGemini = $null   # track last Gemini call to insert delay
 
 foreach ($model in $models) {
+    # Gemini free tier has strict RPM — wait 15s between Gemini calls
+    if ($model -match '^gemini-' -and $null -ne $lastGemini) {
+        Write-Host "  (waiting 15s for Gemini rate limit...)" -ForegroundColor DarkGray
+        Start-Sleep -Seconds 15
+    }
+    if ($model -match '^gemini-') { $lastGemini = $model }
+
     Write-Host "Testing [$model]..." -NoNewline
 
     $body = @{

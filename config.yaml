@@ -1,6 +1,6 @@
 model_list:
 
-  # DeepSeek Official
+  # ── DeepSeek Official ─────────────────────────────────────
   - model_name: deepseek-official-chat
     litellm_params:
       model: deepseek/deepseek-chat
@@ -13,8 +13,7 @@ model_list:
       api_key: os.environ/DEEPSEEK_API_KEY
       api_base: https://api.deepseek.com
 
-  # DeepSeek via DeepInfra
-  # Model names: https://deepinfra.com/models
+  # ── DeepSeek via DeepInfra ────────────────────────────────
   - model_name: deepseek-deepinfra-v4-pro
     litellm_params:
       model: deepinfra/deepseek-ai/DeepSeek-V4-Pro
@@ -25,10 +24,32 @@ model_list:
       model: deepinfra/deepseek-ai/DeepSeek-V4-Flash
       api_key: os.environ/DEEPINFRA_API_KEY
 
-  # Google Gemini (AI Studio - Free Tier)
+  # ── Google Gemini — Free Tier (AI Studio) ─────────────────
+  # Gemini 3.x — newest generation (2026)
+  - model_name: gemini-3.5-flash
+    litellm_params:
+      model: gemini/gemini-3.5-flash
+      api_key: os.environ/GEMINI_API_KEY
+
+  - model_name: gemini-3.1-flash-lite
+    litellm_params:
+      model: gemini/gemini-3.1-flash-lite
+      api_key: os.environ/GEMINI_API_KEY
+
+  # Gemini 2.5 — stable, free tier
+  - model_name: gemini-2.5-pro
+    litellm_params:
+      model: gemini/gemini-2.5-pro
+      api_key: os.environ/GEMINI_API_KEY
+
   - model_name: gemini-2.5-flash
     litellm_params:
       model: gemini/gemini-2.5-flash
+      api_key: os.environ/GEMINI_API_KEY
+
+  - model_name: gemini-2.5-flash-lite
+    litellm_params:
+      model: gemini/gemini-2.5-flash-lite
       api_key: os.environ/GEMINI_API_KEY
 
 litellm_settings:

@@ -29,7 +29,8 @@ allowing you to plug in any OpenAI-compatible endpoint instead of using Copilot'
    API Key      : (leave empty or any value — no auth required for local use)
    Model        : deepseek-official-chat | deepseek-official-v4-flash
                   deepseek-deepinfra-v4-pro | deepseek-deepinfra-v4-flash
-                  gemini-2.5-flash
+                  gemini-3.5-flash | gemini-3.1-flash-lite
+                  gemini-2.5-pro | gemini-2.5-flash | gemini-2.5-flash-lite
    ```
 4. Save and start chatting with Copilot using your own key
 
@@ -195,11 +196,15 @@ Passed: 6 / 6   Failed: 0
 
 | Model name | Provider | Underlying model | Free tier |
 |------------|----------|-----------------|-----------|
-| `deepseek-official-chat` | DeepSeek Official | deepseek/deepseek-chat | — |
-| `deepseek-official-v4-flash` | DeepSeek Official | deepseek/deepseek-v4-flash | — |
+| `deepseek-official-chat` | DeepSeek Official | deepseek-chat | — |
+| `deepseek-official-v4-flash` | DeepSeek Official | deepseek-v4-flash | — |
 | `deepseek-deepinfra-v4-pro` | DeepInfra | deepseek-ai/DeepSeek-V4-Pro | — |
 | `deepseek-deepinfra-v4-flash` | DeepInfra | deepseek-ai/DeepSeek-V4-Flash | — |
-| `gemini-2.5-flash` | Google AI Studio | gemini-2.5-flash | ✅ |
+| `gemini-3.5-flash` | Google AI Studio | gemini-3.5-flash | ✅ newest |
+| `gemini-3.1-flash-lite` | Google AI Studio | gemini-3.1-flash-lite | ✅ fastest |
+| `gemini-2.5-pro` | Google AI Studio | gemini-2.5-pro | ✅ most capable |
+| `gemini-2.5-flash` | Google AI Studio | gemini-2.5-flash | ✅ balanced |
+| `gemini-2.5-flash-lite` | Google AI Studio | gemini-2.5-flash-lite | ✅ lightest |
 
 ---
 
