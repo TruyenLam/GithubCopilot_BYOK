@@ -16,6 +16,7 @@ allowing you to plug in any OpenAI-compatible endpoint instead of using Copilot'
 - Use **DeepSeek**, **Gemini**, or any provider — inside GitHub Copilot chat and completions
 - Pay only for what you use (no Copilot subscription needed for the AI calls)
 - Switch between providers in seconds via an interactive menu
+- Run **all providers simultaneously** or pick one at startup
 - Keep all your keys local — nothing is sent anywhere except the provider you choose
 
 ### How to connect in Visual Studio 2026
@@ -26,7 +27,9 @@ allowing you to plug in any OpenAI-compatible endpoint instead of using Copilot'
    ```
    Endpoint URL : http://127.0.0.1:4000
    API Key      : (value of LITELLM_MASTER_KEY in your .env)
-   Model        : deepseek-official  |  deepseek-deepinfra  |  gemini-flash  |  gemini-pro
+   Model        : deepseek-official-chat | deepseek-official-v4-flash
+                  deepseek-deepinfra-v4-pro | deepseek-deepinfra-v4-flash
+                  gemini-flash | gemini-pro
    ```
 4. Save and start chatting with Copilot using your own key
 
@@ -64,7 +67,7 @@ Open `.env` and fill in your keys:
 ```ini
 PROFILE_1_LABEL=DeepSeek Official - deepseek-chat
 PROFILE_1_ENV_VAR=DEEPSEEK_API_KEY
-PROFILE_1_KEY=sk-xxxxxxxxxxxx          # <-- your real key
+PROFILE_1_KEY=sk-xxxxxxxxxxxx
 
 PROFILE_2_LABEL=DeepInfra - DeepSeek V4 Pro
 PROFILE_2_ENV_VAR=DEEPINFRA_API_KEY
@@ -87,6 +90,9 @@ PROFILE_3_KEY=AIzaxxxxxxxxxxxxxxxx
 
 Add `PROFILE_4_*`, `PROFILE_5_*`, ... to `.env`. The menu updates automatically — no code changes needed.
 
+To add a new model, add an entry to `config.yaml` referencing the appropriate env var.  
+It will appear automatically in the model detail output at startup.
+
 ---
 
 ## Run
@@ -97,17 +103,43 @@ Add `PROFILE_4_*`, `PROFILE_5_*`, ... to `.env`. The menu updates automatically 
 .\start.ps1
 ```
 
-An interactive menu appears:
+### Interactive menu
 
 ```
 ========================================
    LiteLLM BYOK - Select Provider/Key
 ========================================
+  0) ALL providers (use all keys at once)
   1) DeepSeek Official - deepseek-chat
   2) DeepInfra - DeepSeek V4 Pro
   3) Gemini 2.0 Flash (AI Studio)
 
-Enter number (1-3):
+Enter number (0 = all, 1-3 = single):
+```
+
+**Option `0` — All providers**
+
+Sets all keys at once. Every model in `config.yaml` is available in the same session:
+
+```
+Selected : ALL providers
+  [OK] DeepSeek Official - deepseek-chat
+  [OK] DeepInfra - DeepSeek V4 Pro
+  [OK] Gemini 2.0 Flash (AI Studio)
+Proxy    : http://127.0.0.1:4000
+```
+
+**Option `1-N` — Single provider**
+
+Sets only that provider's key and shows exactly which models from `config.yaml` will be active:
+
+```
+Selected : DeepSeek Official - deepseek-chat
+Env var  : DEEPSEEK_API_KEY
+Models available via this key:
+  - deepseek-official-chat              (deepseek/deepseek-chat)
+  - deepseek-official-v4-flash          (deepseek/deepseek-v4-flash)
+Proxy    : http://127.0.0.1:4000
 ```
 
 The proxy starts at `http://127.0.0.1:4000`.
@@ -118,12 +150,12 @@ The proxy starts at `http://127.0.0.1:4000`.
 
 | Model name | Provider | Underlying model |
 |------------|----------|-----------------|
-| `deepseek-official-chat` | DeepSeek | deepseek-chat |
-| `deepseek-official-v4-flash` | DeepSeek | deepseek-v4-flash |
-| `deepseek-deepinfra-v4-pro` | DeepInfra | deepseek-ai/DeepSeek-V4-Pro |
-| `deepseek-deepinfra-v4-flash` | DeepInfra | deepseek-ai/DeepSeek-V4-0-Flash |
-| `gemini-flash` | Google AI Studio | gemini-3.1-flash-lite |
-| `gemini-pro` | Google AI Studio | gemini-2.5-pro |
+| `deepseek-official-chat` | DeepSeek Official | deepseek/deepseek-chat |
+| `deepseek-official-v4-flash` | DeepSeek Official | deepseek/deepseek-v4-flash |
+| `deepseek-deepinfra-v4-pro` | DeepInfra | deepinfra/deepseek-ai/DeepSeek-V4-Pro |
+| `deepseek-deepinfra-v4-flash` | DeepInfra | deepinfra/deepseek-ai/DeepSeek-V4-0-Flash |
+| `gemini-flash` | Google AI Studio | gemini/gemini-3.1-flash-lite |
+| `gemini-pro` | Google AI Studio | gemini/gemini-2.5-pro |
 
 ---
 
