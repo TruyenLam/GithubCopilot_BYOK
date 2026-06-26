@@ -1,13 +1,13 @@
 model_list:
 
-  # DeepSeek chính chủ
+  # DeepSeek Official
   - model_name: deepseek-official
     litellm_params:
       model: deepseek/deepseek-chat
       api_key: os.environ/DEEPSEEK_API_KEY
       api_base: https://api.deepseek.com
 
-  # DeepSeek qua DeepInfra
+  # DeepSeek via DeepInfra
   - model_name: deepseek-deepinfra
     litellm_params:
       model: deepinfra/deepseek-ai/DeepSeek-V4-Pro

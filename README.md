@@ -1,41 +1,41 @@
 # LiteLLM BYOK — Bring Your Own Key
 
-Chạy LiteLLM proxy local với key của bạn. Hỗ trợ **DeepSeek chính chủ**, **DeepSeek qua DeepInfra**, và **Google Gemini**.
+Run a local LiteLLM proxy with your own API keys. Supports **DeepSeek Official**, **DeepSeek via DeepInfra**, and **Google Gemini**.
 
 ---
 
-## Yêu cầu
+## Requirements
 
 - Python 3.10+
 - Windows (PowerShell 5+)
 
 ---
 
-## Cài đặt
+## Installation
 
 ```bash
-# 1. Clone repo
+# 1. Clone the repo
 git clone https://github.com/TruyenLam/GithubCopilot_BYOK.git
 cd GithubCopilot_BYOK
 
-# 2. Tạo virtual env và cài LiteLLM
+# 2. Create a virtual environment and install LiteLLM
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install "litellm[proxy]"
 
-# 3. Tạo file .env từ template
+# 3. Create your .env file from the template
 copy .env.example .env
 ```
 
 ---
 
-## Cấu hình key
+## Configure your API keys
 
-Mở file `.env` và điền API key của bạn vào:
+Open `.env` and fill in your keys:
 
 ```ini
 PROFILE_1_LABEL=DeepSeek Official - deepseek-chat
 PROFILE_1_ENV_VAR=DEEPSEEK_API_KEY
-PROFILE_1_KEY=sk-xxxxxxxxxxxx          # <-- key thật của bạn
+PROFILE_1_KEY=sk-xxxxxxxxxxxx          # <-- your real key
 
 PROFILE_2_LABEL=DeepInfra - DeepSeek V4 Pro
 PROFILE_2_ENV_VAR=DEEPINFRA_API_KEY
@@ -46,61 +46,61 @@ PROFILE_3_ENV_VAR=GEMINI_API_KEY
 PROFILE_3_KEY=AIzaxxxxxxxxxxxxxxxx
 ```
 
-### Lấy key ở đâu?
+### Where to get your keys
 
-| Provider | Link |
-|----------|------|
-| DeepSeek chính chủ | https://platform.deepseek.com/api_keys |
+| Provider | URL |
+|----------|-----|
+| DeepSeek Official | https://platform.deepseek.com/api_keys |
 | DeepInfra | https://deepinfra.com/dash/api_keys |
 | Google Gemini | https://aistudio.google.com/apikey |
 
-### Thêm nhiều key / nhiều model
+### Adding more keys or models
 
-Chỉ cần thêm `PROFILE_4_*`, `PROFILE_5_*`, ... vào `.env`. Script tự động hiển thị trong menu.
+Add `PROFILE_4_*`, `PROFILE_5_*`, ... to `.env`. The menu updates automatically — no code changes needed.
 
 ---
 
-## Chạy
+## Run
 
-**Double-click** `start.bat` hoặc chạy trong PowerShell:
+**Double-click** `start.bat`, or run in PowerShell:
 
 ```powershell
 .\start.ps1
 ```
 
-Menu xuất hiện:
+An interactive menu appears:
 
 ```
 ========================================
-   LiteLLM BYOK - Chon Provider / Key
+   LiteLLM BYOK - Select Provider/Key
 ========================================
   1) DeepSeek Official - deepseek-chat
   2) DeepInfra - DeepSeek V4 Pro
   3) Gemini 2.0 Flash (AI Studio)
 
-Nhap so (1-3):
+Enter number (1-3):
 ```
 
-Proxy chạy tại `http://127.0.0.1:4000`.
+The proxy starts at `http://127.0.0.1:4000`.
 
 ---
 
-## Dùng với GitHub Copilot (BYOK)
+## Use with GitHub Copilot (BYOK)
 
-Sau khi proxy đang chạy, cấu hình endpoint trong Copilot:
+Once the proxy is running, point Copilot to it:
 
 ```
 URL:     http://127.0.0.1:4000
-API Key: (giá trị LITELLM_MASTER_KEY trong .env)
+API Key: (value of LITELLM_MASTER_KEY in your .env)
 Model:   deepseek-official | deepseek-deepinfra | gemini-flash | gemini-pro
 ```
 
 ---
 
-## Models có sẵn
+## Available models
 
-| Model Name | Provider | Model thật |
-|------------|----------|-----------|
+| Model name | Provider | Underlying model |
+|------------|----------|-----------------|
 | `deepseek-official` | DeepSeek | deepseek-chat |
 | `deepseek-deepinfra` | DeepInfra | deepseek-ai/DeepSeek-V4-Pro |
 | `gemini-flash` | Google AI Studio | gemini-2.0-flash |
@@ -108,8 +108,8 @@ Model:   deepseek-official | deepseek-deepinfra | gemini-flash | gemini-pro
 
 ---
 
-## Bảo mật
+## Security
 
-- File `.env` chứa key thật — **không bao giờ commit lên git**
-- `.env` đã được thêm vào `.gitignore` tự động
-- Chỉ commit `.env.example` (không có key thật)
+- `.env` contains your real keys — **never commit it to git**
+- `.env` is already listed in `.gitignore`
+- Only `.env.example` (no real keys) is committed to the repository
