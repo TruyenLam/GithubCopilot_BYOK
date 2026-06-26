@@ -51,7 +51,6 @@ Repeat for each model you want available in the Copilot picker.
 | `deepseek-deepinfra-v4-flash` | 128,000 | 8,192 |
 | `gemini-3.5-flash` | 1,000,000 | 8,192 |
 | `gemini-3.1-flash-lite` | 1,000,000 | 8,192 |
-| `gemini-2.5-pro` | 1,000,000 | 8,192 |
 | `gemini-2.5-flash` | 1,000,000 | 8,192 |
 | `gemini-2.5-flash-lite` | 1,000,000 | 8,192 |
 
@@ -223,7 +222,6 @@ Passed: 6 / 6   Failed: 0
 | `deepseek-deepinfra-v4-flash` | DeepInfra | deepseek-ai/DeepSeek-V4-Flash | — |
 | `gemini-3.5-flash` | Google AI Studio | gemini-3.5-flash | ✅ newest |
 | `gemini-3.1-flash-lite` | Google AI Studio | gemini-3.1-flash-lite | ✅ fastest |
-| `gemini-2.5-pro` | Google AI Studio | gemini-2.5-pro | ✅ most capable |
 | `gemini-2.5-flash` | Google AI Studio | gemini-2.5-flash | ✅ balanced |
 | `gemini-2.5-flash-lite` | Google AI Studio | gemini-2.5-flash-lite | ✅ lightest |
 
