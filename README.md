@@ -29,7 +29,7 @@ allowing you to plug in any OpenAI-compatible endpoint instead of using Copilot'
    API Key      : (leave empty or any value — no auth required for local use)
    Model        : deepseek-official-chat | deepseek-official-v4-flash
                   deepseek-deepinfra-v4-pro | deepseek-deepinfra-v4-flash
-                  gemini-flash | gemini-pro
+                  gemini-flash | gemini-flash-lite | gemini-2.5-flash
    ```
 4. Save and start chatting with Copilot using your own key
 
@@ -193,14 +193,15 @@ Passed: 6 / 6   Failed: 0
 
 ## Available models
 
-| Model name | Provider | Underlying model |
-|------------|----------|-----------------|
-| `deepseek-official-chat` | DeepSeek Official | deepseek/deepseek-chat |
-| `deepseek-official-v4-flash` | DeepSeek Official | deepseek/deepseek-v4-flash |
-| `deepseek-deepinfra-v4-pro` | DeepInfra | deepinfra/deepseek-ai/DeepSeek-V4-Pro |
-| `deepseek-deepinfra-v4-flash` | DeepInfra | deepinfra/deepseek-ai/DeepSeek-V4-0-Flash |
-| `gemini-flash` | Google AI Studio | gemini/gemini-3.1-flash-lite |
-| `gemini-pro` | Google AI Studio | gemini/gemini-2.5-pro |
+| Model name | Provider | Underlying model | Free tier |
+|------------|----------|-----------------|-----------|
+| `deepseek-official-chat` | DeepSeek Official | deepseek/deepseek-chat | — |
+| `deepseek-official-v4-flash` | DeepSeek Official | deepseek/deepseek-v4-flash | — |
+| `deepseek-deepinfra-v4-pro` | DeepInfra | deepseek-ai/DeepSeek-V4-Pro | — |
+| `deepseek-deepinfra-v4-flash` | DeepInfra | deepseek-ai/DeepSeek-V4-Flash | — |
+| `gemini-flash` | Google AI Studio | gemini-2.0-flash | ✅ |
+| `gemini-flash-lite` | Google AI Studio | gemini-2.0-flash-lite | ✅ |
+| `gemini-2.5-flash` | Google AI Studio | gemini-2.5-flash | ✅ |
 
 ---
 
