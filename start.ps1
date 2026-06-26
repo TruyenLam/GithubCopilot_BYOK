@@ -1,7 +1,8 @@
 [CmdletBinding()]
 param(
     [string]$HostAddress = "127.0.0.1",
-    [int]$Port = 4000
+    [int]$Port = 4000,
+    [int]$AutoProfile = -1   # -1 = show menu; 0 = all; 1..N = specific profile
 )
 
 $ErrorActionPreference = "Stop"
@@ -82,7 +83,7 @@ foreach ($line in $yamlLines) {
     }
 }
 
-# --- Show menu ---
+# --- Show menu or use AutoProfile ---
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "   LiteLLM BYOK - Select Provider/Key  " -ForegroundColor Cyan
@@ -94,18 +95,32 @@ for ($j = 0; $j -lt $profiles.Count; $j++) {
 Write-Host ""
 
 $selection = $null
-while ($null -eq $selection) {
-    $input = Read-Host "Enter number (0 = all, 1-$($profiles.Count) = single)"
-    if ($input -match '^\d+$') {
-        $idx = [int]$input
-        if ($idx -eq 0) {
-            $selection = "all"
-        } elseif ($idx -ge 1 -and $idx -le $profiles.Count) {
-            $selection = $profiles[$idx - 1]
-        }
+
+if ($AutoProfile -ge 0) {
+    # Non-interactive mode: use the value passed by caller
+    if ($AutoProfile -eq 0) {
+        $selection = "all"
+        Write-Host "Auto-selected: ALL providers" -ForegroundColor Yellow
+    } elseif ($AutoProfile -ge 1 -and $AutoProfile -le $profiles.Count) {
+        $selection = $profiles[$AutoProfile - 1]
+        Write-Host "Auto-selected: $($selection.Label)" -ForegroundColor Yellow
+    } else {
+        throw "AutoProfile $AutoProfile is out of range (0-$($profiles.Count))."
     }
-    if ($null -eq $selection) {
-        Write-Host "Invalid selection, please try again." -ForegroundColor Yellow
+} else {
+    while ($null -eq $selection) {
+        $input = Read-Host "Enter number (0 = all, 1-$($profiles.Count) = single)"
+        if ($input -match '^\d+$') {
+            $idx = [int]$input
+            if ($idx -eq 0) {
+                $selection = "all"
+            } elseif ($idx -ge 1 -and $idx -le $profiles.Count) {
+                $selection = $profiles[$idx - 1]
+            }
+        }
+        if ($null -eq $selection) {
+            Write-Host "Invalid selection, please try again." -ForegroundColor Yellow
+        }
     }
 }
 
