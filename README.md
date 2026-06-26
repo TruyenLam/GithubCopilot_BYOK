@@ -21,18 +21,39 @@ allowing you to plug in any OpenAI-compatible endpoint instead of using Copilot'
 
 ### How to connect in Visual Studio 2026
 
-1. Start the proxy (see [Run](#run) below)
-2. Open Visual Studio 2026 → **Tools → Options → GitHub Copilot → BYOK / Custom Endpoint**
-3. Set:
-   ```
-   Endpoint URL : http://127.0.0.1:4000
-   API Key      : (leave empty or any value — no auth required for local use)
-   Model        : deepseek-official-chat | deepseek-official-v4-flash
-                  deepseek-deepinfra-v4-pro | deepseek-deepinfra-v4-flash
-                  gemini-3.5-flash | gemini-3.1-flash-lite
-                  gemini-2.5-pro | gemini-2.5-flash | gemini-2.5-flash-lite
-   ```
-4. Save and start chatting with Copilot using your own key
+**Step 1 — Start the proxy** (see [Run](#run) below), then:
+
+**Step 2 — Open the BYOM dialog**  
+`GitHub Copilot` chat panel → gear icon → **Bring Your Own Model** → **+ Add model**
+
+**Step 3 — Fill in the fields**
+
+| Field | Value |
+|-------|-------|
+| **Display Name** | Any friendly name, e.g. `DeepSeek Official Chat` |
+| **Model ID** | Model name from the [table below](#available-models), e.g. `deepseek-official-chat` |
+| **Resource Endpoint** | `http://localhost:4000` |
+| **Token limit** | See per-model limits below |
+| **Supports tool calling** | ✅ Check for DeepSeek models |
+| **Supports image context** | Leave unchecked |
+
+**Step 4 — Click Add, then Save**
+
+Repeat for each model you want available in the Copilot picker.
+
+#### Token limits per model
+
+| Model | Context (input) | Output |
+|-------|----------------|--------|
+| `deepseek-official-chat` | 64,000 | 8,192 |
+| `deepseek-official-v4-flash` | 64,000 | 8,192 |
+| `deepseek-deepinfra-v4-pro` | 128,000 | 8,192 |
+| `deepseek-deepinfra-v4-flash` | 128,000 | 8,192 |
+| `gemini-3.5-flash` | 1,000,000 | 8,192 |
+| `gemini-3.1-flash-lite` | 1,000,000 | 8,192 |
+| `gemini-2.5-pro` | 1,000,000 | 8,192 |
+| `gemini-2.5-flash` | 1,000,000 | 8,192 |
+| `gemini-2.5-flash-lite` | 1,000,000 | 8,192 |
 
 ---
 
