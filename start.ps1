@@ -158,4 +158,9 @@ if ($selection -eq "all") {
 Write-Host "Proxy    : http://$HostAddress`:$Port" -ForegroundColor Green
 Write-Host ""
 
-& $LiteLlm --config $Config --host $HostAddress --port $Port
+$masterKey = $envData["LITELLM_MASTER_KEY"]
+if ($masterKey -and $masterKey -ne "sk-change-me") {
+    & $LiteLlm --config $Config --host $HostAddress --port $Port --master-key $masterKey
+} else {
+    & $LiteLlm --config $Config --host $HostAddress --port $Port
+}

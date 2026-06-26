@@ -146,6 +146,49 @@ The proxy starts at `http://127.0.0.1:4000`.
 
 ---
 
+## Test all models
+
+With the proxy running, **double-click `test.bat`** or run:
+
+```powershell
+.\test.ps1
+```
+
+The script fetches the model list from the proxy automatically and sends a test message to each one:
+
+```
+========================================
+   LiteLLM BYOK - Test All Models
+========================================
+Proxy : http://127.0.0.1:4000
+
+Found 6 model(s): deepseek-official-chat, deepseek-official-v4-flash, ...
+
+Testing [deepseek-official-chat]... OK  (1243ms)
+     I am DeepSeek-V3, an AI assistant created by DeepSeek.
+
+Testing [deepseek-official-v4-flash]... OK  (876ms)
+     I am DeepSeek-V4-Flash, an AI assistant made by DeepSeek.
+
+Testing [gemini-flash]... OK  (612ms)
+     I am Gemini, a large language model made by Google.
+...
+
+========================================
+Summary
+========================================
+[OK  ] deepseek-official-chat
+[OK  ] deepseek-official-v4-flash
+[OK  ] deepseek-deepinfra-v4-pro
+[OK  ] deepseek-deepinfra-v4-flash
+[OK  ] gemini-flash
+[OK  ] gemini-pro
+
+Passed: 6 / 6   Failed: 0
+```
+
+---
+
 ## Available models
 
 | Model name | Provider | Underlying model |
