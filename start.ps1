@@ -54,6 +54,34 @@ if ($profiles.Count -eq 0) {
     throw "No profiles found in .env. Add PROFILE_1_LABEL / PROFILE_1_ENV_VAR / PROFILE_1_KEY."
 }
 
+# --- Parse config.yaml: map each env var -> list of model_name + underlying model ---
+# Reads blocks of: model_name, then model: and api_key: under litellm_params
+$modelMap = @{}  # envVarName -> list of [model_name, underlying_model]
+$yamlLines = Get-Content $Config
+$currentModelName = $null
+$currentEnvVar    = $null
+$currentModel     = $null
+foreach ($line in $yamlLines) {
+    if ($line -match '^\s*-\s*model_name:\s*(.+)') {
+        $currentModelName = $Matches[1].Trim()
+        $currentEnvVar    = $null
+        $currentModel     = $null
+    } elseif ($line -match '^\s*model:\s*(.+)') {
+        $currentModel = $Matches[1].Trim()
+    } elseif ($line -match '^\s*api_key:\s*os\.environ/(\S+)') {
+        $currentEnvVar = $Matches[1].Trim()
+        if ($currentModelName -and $currentEnvVar) {
+            if (-not $modelMap.ContainsKey($currentEnvVar)) {
+                $modelMap[$currentEnvVar] = @()
+            }
+            $modelMap[$currentEnvVar] += [PSCustomObject]@{
+                Name  = $currentModelName
+                Model = $currentModel
+            }
+        }
+    }
+}
+
 # --- Show menu ---
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan
@@ -116,6 +144,15 @@ if ($selection -eq "all") {
     Write-Host ""
     Write-Host "Selected : $($selection.Label)"  -ForegroundColor Green
     Write-Host "Env var  : $($selection.EnvVar)" -ForegroundColor Green
+    Write-Host "Models available via this key:" -ForegroundColor Cyan
+    $models = $modelMap[$selection.EnvVar]
+    if ($models) {
+        foreach ($m in $models) {
+            Write-Host ("  - {0,-35} ({1})" -f $m.Name, $m.Model) -ForegroundColor White
+        }
+    } else {
+        Write-Host "  (no models found for $($selection.EnvVar) in config.yaml)" -ForegroundColor DarkGray
+    }
 }
 
 Write-Host "Proxy    : http://$HostAddress`:$Port" -ForegroundColor Green
