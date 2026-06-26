@@ -59,42 +59,65 @@ Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "   LiteLLM BYOK - Select Provider/Key  " -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
+Write-Host "  0) ALL providers (use all keys at once)" -ForegroundColor Yellow
 for ($j = 0; $j -lt $profiles.Count; $j++) {
     Write-Host ("  {0}) {1}" -f ($j + 1), $profiles[$j].Label)
 }
 Write-Host ""
 
-$choice = $null
-while ($null -eq $choice) {
-    $input = Read-Host "Enter number (1-$($profiles.Count))"
+$selection = $null
+while ($null -eq $selection) {
+    $input = Read-Host "Enter number (0 = all, 1-$($profiles.Count) = single)"
     if ($input -match '^\d+$') {
-        $idx = [int]$input - 1
-        if ($idx -ge 0 -and $idx -lt $profiles.Count) {
-            $choice = $profiles[$idx]
+        $idx = [int]$input
+        if ($idx -eq 0) {
+            $selection = "all"
+        } elseif ($idx -ge 1 -and $idx -le $profiles.Count) {
+            $selection = $profiles[$idx - 1]
         }
     }
-    if ($null -eq $choice) {
+    if ($null -eq $selection) {
         Write-Host "Invalid selection, please try again." -ForegroundColor Yellow
     }
 }
 
-if (-not $choice.Key) {
-    throw "Profile '$($choice.Label)' has no API key set. Edit .env and fill in the key."
-}
-
 # --- Set environment variables ---
-[System.Environment]::SetEnvironmentVariable($choice.EnvVar, $choice.Key, "Process")
-$env:LITELLM_MASTER_KEY      = $envData["LITELLM_MASTER_KEY"]
-$env:PYTHONUTF8              = "1"
-$env:PYTHONIOENCODING        = "utf-8"
-$env:PYTHON_DOTENV_DISABLED  = "1"
+$env:LITELLM_MASTER_KEY     = $envData["LITELLM_MASTER_KEY"]
+$env:PYTHONUTF8             = "1"
+$env:PYTHONIOENCODING       = "utf-8"
+$env:PYTHON_DOTENV_DISABLED = "1"
 Remove-Item Env:DATABASE_URL              -ErrorAction SilentlyContinue
 Remove-Item Env:DIRECT_URL                -ErrorAction SilentlyContinue
 Remove-Item Env:DATABASE_URL_READ_REPLICA -ErrorAction SilentlyContinue
 
-Write-Host ""
-Write-Host "Selected : $($choice.Label)"  -ForegroundColor Green
-Write-Host "Env var  : $($choice.EnvVar)" -ForegroundColor Green
+if ($selection -eq "all") {
+    $missing = @()
+    foreach ($p in $profiles) {
+        if ($p.Key) {
+            [System.Environment]::SetEnvironmentVariable($p.EnvVar, $p.Key, "Process")
+        } else {
+            $missing += $p.Label
+        }
+    }
+    Write-Host ""
+    Write-Host "Selected : ALL providers" -ForegroundColor Yellow
+    foreach ($p in $profiles) {
+        if ($p.Key) {
+            Write-Host "  [OK] $($p.Label)" -ForegroundColor Green
+        } else {
+            Write-Host "  [--] $($p.Label)  (key not set, model will be unavailable)" -ForegroundColor DarkGray
+        }
+    }
+} else {
+    if (-not $selection.Key) {
+        throw "Profile '$($selection.Label)' has no API key set. Edit .env and fill in the key."
+    }
+    [System.Environment]::SetEnvironmentVariable($selection.EnvVar, $selection.Key, "Process")
+    Write-Host ""
+    Write-Host "Selected : $($selection.Label)"  -ForegroundColor Green
+    Write-Host "Env var  : $($selection.EnvVar)" -ForegroundColor Green
+}
+
 Write-Host "Proxy    : http://$HostAddress`:$Port" -ForegroundColor Green
 Write-Host ""
 
