@@ -1,6 +1,34 @@
 # LiteLLM BYOK — Bring Your Own Key
 
-Run a local LiteLLM proxy with your own API keys. Supports **DeepSeek Official**, **DeepSeek via DeepInfra**, and **Google Gemini**.
+> **Use your own AI API keys with GitHub Copilot in Visual Studio 2026 — no subscription required.**
+
+Run a local LiteLLM proxy that bridges GitHub Copilot to your own API keys.  
+Supports **DeepSeek Official**, **DeepSeek via DeepInfra**, and **Google Gemini**.
+
+---
+
+## ✨ Visual Studio 2026 + GitHub Copilot BYOK
+
+Visual Studio 2026 introduced **Bring Your Own Key (BYOK)** support for GitHub Copilot,  
+allowing you to plug in any OpenAI-compatible endpoint instead of using Copilot's default models.
+
+**This tool lets you:**
+- Use **DeepSeek**, **Gemini**, or any provider — inside GitHub Copilot chat and completions
+- Pay only for what you use (no Copilot subscription needed for the AI calls)
+- Switch between providers in seconds via an interactive menu
+- Keep all your keys local — nothing is sent anywhere except the provider you choose
+
+### How to connect in Visual Studio 2026
+
+1. Start the proxy (see [Run](#run) below)
+2. Open Visual Studio 2026 → **Tools → Options → GitHub Copilot → BYOK / Custom Endpoint**
+3. Set:
+   ```
+   Endpoint URL : http://127.0.0.1:4000
+   API Key      : (value of LITELLM_MASTER_KEY in your .env)
+   Model        : deepseek-official  |  deepseek-deepinfra  |  gemini-flash  |  gemini-pro
+   ```
+4. Save and start chatting with Copilot using your own key
 
 ---
 
@@ -8,6 +36,7 @@ Run a local LiteLLM proxy with your own API keys. Supports **DeepSeek Official**
 
 - Python 3.10+
 - Windows (PowerShell 5+)
+- Visual Studio 2026 with GitHub Copilot extension
 
 ---
 
@@ -85,18 +114,6 @@ The proxy starts at `http://127.0.0.1:4000`.
 
 ---
 
-## Use with GitHub Copilot (BYOK)
-
-Once the proxy is running, point Copilot to it:
-
-```
-URL:     http://127.0.0.1:4000
-API Key: (value of LITELLM_MASTER_KEY in your .env)
-Model:   deepseek-official | deepseek-deepinfra | gemini-flash | gemini-pro
-```
-
----
-
 ## Available models
 
 | Model name | Provider | Underlying model |
@@ -113,3 +130,4 @@ Model:   deepseek-official | deepseek-deepinfra | gemini-flash | gemini-pro
 - `.env` contains your real keys — **never commit it to git**
 - `.env` is already listed in `.gitignore`
 - Only `.env.example` (no real keys) is committed to the repository
+- The proxy runs locally — your keys never leave your machine
