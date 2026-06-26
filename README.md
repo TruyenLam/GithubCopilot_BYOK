@@ -26,7 +26,7 @@ allowing you to plug in any OpenAI-compatible endpoint instead of using Copilot'
 3. Set:
    ```
    Endpoint URL : http://127.0.0.1:4000
-   API Key      : (value of LITELLM_MASTER_KEY in your .env)
+   API Key      : (leave empty or any value — no auth required for local use)
    Model        : deepseek-official-chat | deepseek-official-v4-flash
                   deepseek-deepinfra-v4-pro | deepseek-deepinfra-v4-flash
                   gemini-flash | gemini-pro
@@ -76,6 +76,8 @@ PROFILE_2_KEY=xxxxxxxxxxxxxx
 PROFILE_3_LABEL=Gemini 2.0 Flash (AI Studio)
 PROFILE_3_ENV_VAR=GEMINI_API_KEY
 PROFILE_3_KEY=AIzaxxxxxxxxxxxxxxxx
+
+# No master key needed — this proxy runs locally only
 ```
 
 ### Where to get your keys
